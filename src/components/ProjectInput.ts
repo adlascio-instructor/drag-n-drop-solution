@@ -1,3 +1,5 @@
+type FormTuple = [string, string, number];
+
 export class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -33,11 +35,36 @@ export class ProjectInput {
     this.attach();
   }
 
+  private gatherUserInput(): FormTuple | void {
+    const titleValue = this.titleInputElement.value;
+    const descValue = this.descriptionInputElement.value;
+    const peopleValue = +this.peopleInputElement.value;
+    console.log(peopleValue);
+
+    if (!titleValue || !descValue || peopleValue <= 0) {
+      alert("invalid data");
+      return;
+    }
+    return [titleValue, descValue, peopleValue];
+  }
+
+  private clearInputs() {
+    this.titleInputElement.value = "";
+    this.descriptionInputElement.value = "";
+    this.peopleInputElement.value = "";
+  }
+
   private submitHandler(e: Event) {
     e.preventDefault();
-    console.log("title", this.titleInputElement.value);
-    console.log("description", this.descriptionInputElement.value);
-    console.log("people", this.peopleInputElement.value);
+    const userInput = this.gatherUserInput();
+    console.log("input data", userInput);
+    if (userInput) {
+      const [title, desc, people] = userInput;
+      console.log("title", title);
+      console.log("description", desc);
+      console.log("people", people);
+    }
+    this.clearInputs();
   }
 
   private configure() {
