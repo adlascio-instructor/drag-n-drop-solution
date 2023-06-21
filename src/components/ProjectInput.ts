@@ -1,3 +1,5 @@
+import { Validatable, validate } from "../helpers/validation.js";
+
 type FormTuple = [string, string, number];
 
 export class ProjectInput {
@@ -39,9 +41,27 @@ export class ProjectInput {
     const titleValue = this.titleInputElement.value;
     const descValue = this.descriptionInputElement.value;
     const peopleValue = +this.peopleInputElement.value;
-    console.log(peopleValue);
-
-    if (!titleValue || !descValue || peopleValue <= 0) {
+    // console.log(peopleValue);
+    const titleValidatable: Validatable = {
+      value: titleValue,
+      required: true,
+      minLength: 3,
+    };
+    const descriptionValidatable: Validatable = {
+      value: descValue,
+      required: true,
+      minLength: 5,
+    };
+    const peopleValidatable: Validatable = {
+      value: peopleValue,
+      required: true,
+      min: 2,
+    };
+    if (
+      !validate(titleValidatable) ||
+      !validate(descriptionValidatable) ||
+      !validate(peopleValidatable)
+    ) {
       alert("invalid data");
       return;
     }
