@@ -138,10 +138,10 @@ Now that we have the form working, let's create a new class to render the projec
 - This class should have 3 properties: `templateElement`, `hostElement` and `element`.
 - In the constructor, should receive `type` as argument. This argument should be an union type and should be either `active` or `finished`. Use shorthand syntax to initialize the property as `private`.
 - Inside the constructor, copy from the constructor of the `ProjectInput` class and make the necessary changes.
-- The `id` of the element should be `#${this.type}-projects`.
+- The `id` of the element should be `${this.type}-projects`.
 - Create the `attach` method as `private` method. This method should append the `this.element` to the `this.hostElement`.
 - Create the `renderContent` method as `private` method.
-- Inside of the `renderContent` method, create a new variable called `listId` and set it to `#${this.type}-projects-list`.
+- Inside of the `renderContent` method, create a new variable called `listId` and set it to `${this.type}-projects-list`.
 - Set the `id` of the `ul` element to `listId`.
 - Set the `textContent` of the `h2` element to `this.type.toUpperCase() + ' PROJECTS'`.
 - Call the `renderContent` method after the `attach` method in the constructor.
