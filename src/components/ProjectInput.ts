@@ -1,29 +1,15 @@
 import { Validatable, validate } from "../helpers/validation.js";
 import { projectState } from "./ProjectState.js";
+import { Component } from "./base-component.js";
 
 type FormTuple = [string, string, number];
 
-export class ProjectInput {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLFormElement;
+export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
   peopleInputElement: HTMLInputElement;
   constructor() {
-    this.templateElement = document.getElementById(
-      "project-input"
-    )! as HTMLTemplateElement;
-    this.hostElement = document.getElementById("app")! as HTMLDivElement;
-    // Get the content of the template
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-    // Get the form element from the template
-    this.element = importedNode.firstElementChild as HTMLFormElement;
-    // Add a new id to the form
-    this.element.id = "user-input";
+    super("project-input", "app", "user-input");
     this.titleInputElement = this.element.querySelector(
       "#title"
     )! as HTMLInputElement;
@@ -33,8 +19,8 @@ export class ProjectInput {
     this.peopleInputElement = this.element.querySelector(
       "#people"
     )! as HTMLInputElement;
-    this.configure();
     // Attach the form to the host element
+    this.configure();
     this.attach();
   }
 
@@ -88,12 +74,9 @@ export class ProjectInput {
     }
     this.clearInputs();
   }
+  renderContent() {}
 
-  private configure() {
+  configure() {
     this.element.addEventListener("submit", this.submitHandler.bind(this));
-  }
-
-  attach() {
-    this.hostElement.append(this.element);
   }
 }

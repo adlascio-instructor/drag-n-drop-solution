@@ -1,41 +1,17 @@
 import { Project, ProjectStatus } from "../models/project.js";
 import { projectState } from "./ProjectState.js";
+import { Component } from "./base-component.js";
 
 type ProjectListType = "active" | "finished";
 
-export class ProjectList {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLElement;
+export class ProjectList extends Component<HTMLDivElement, HTMLElement> {
   private assignedProjects: Project[] = [];
   //   private type: ProjectListType;
   constructor(private type: ProjectListType) {
+    super("project-list", "app", `${type}-projects`);
     this.type = type;
-    this.templateElement = document.getElementById(
-      "project-list"
-    )! as HTMLTemplateElement;
-    this.hostElement = document.getElementById("app")! as HTMLDivElement;
-    // Get the content of the template
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-    // Get the form element from the template
-    this.element = importedNode.firstElementChild as HTMLElement;
-    // Add a new id to the form
-    this.element.id = `${this.type}-projects`;
     this.renderContent();
-    projectState.addListeners((projects: Project[]) => {
-      this.assignedProjects = projects.filter((project) => {
-        if (this.type === "active") {
-          return project.status === ProjectStatus.Active;
-        } else if (this.type === "finished") {
-          return project.status === ProjectStatus.Finished;
-        }
-        return;
-      });
-      this.renderProjects();
-    });
+    this.configure();
     this.attach();
   }
   renderProjects() {
@@ -47,10 +23,20 @@ export class ProjectList {
       ul.append(li);
     });
   }
-  private attach() {
-    this.hostElement.append(this.element);
+  configure() {
+    projectState.addListeners((projects: Project[]) => {
+      this.assignedProjects = projects.filter((project) => {
+        if (this.type === "active") {
+          return project.status === ProjectStatus.Active;
+        } else if (this.type === "finished") {
+          return project.status === ProjectStatus.Finished;
+        }
+        return;
+      });
+      this.renderProjects();
+    });
   }
-  private renderContent() {
+  renderContent() {
     const listId = `${this.type}-projects-list`;
     this.element.querySelector("ul")!.id = listId;
     this.element.querySelector("h2")!.textContent =
