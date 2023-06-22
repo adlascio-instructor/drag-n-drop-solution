@@ -1,4 +1,5 @@
 import { Validatable, validate } from "../helpers/validation.js";
+import { projectState } from "./ProjectState.js";
 
 type FormTuple = [string, string, number];
 
@@ -83,6 +84,7 @@ export class ProjectInput {
       console.log("title", title);
       console.log("description", desc);
       console.log("people", people);
+      projectState.addProject(title, desc, people);
     }
     this.clearInputs();
   }
