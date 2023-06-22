@@ -1,4 +1,4 @@
-import { Project } from "../models/project.js";
+import { Project, ProjectStatus } from "../models/project.js";
 import { projectState } from "./ProjectState.js";
 
 type ProjectListType = "active" | "finished";
@@ -26,16 +26,24 @@ export class ProjectList {
     this.element.id = `${this.type}-projects`;
     this.renderContent();
     projectState.addListeners((projects: Project[]) => {
-      this.assignedProjects = projects;
+      this.assignedProjects = projects.filter((project) => {
+        if (this.type === "active") {
+          return project.status === ProjectStatus.Active;
+        } else if (this.type === "finished") {
+          return project.status === ProjectStatus.Finished;
+        }
+        return;
+      });
       this.renderProjects();
     });
     this.attach();
   }
   renderProjects() {
+    const ul = document.getElementById(`${this.type}-projects-list`)!;
+    ul.innerHTML = "";
     this.assignedProjects.forEach((project) => {
       const li = document.createElement("li");
       li.textContent = project.title;
-      const ul = document.getElementById(`${this.type}-projects-list`)!;
       ul.append(li);
     });
   }
