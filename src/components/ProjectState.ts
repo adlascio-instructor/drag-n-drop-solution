@@ -1,27 +1,34 @@
+import { Project, ProjectStatus } from "../models/project.js";
+
+type Listener = (projects: Project[]) => void;
+
 class ProjectState {
   private static instance: ProjectState;
-  private projects: any[];
-  private listeners: any[];
+  private projects: Project[];
+  private listeners: Listener[];
   private constructor() {
     this.projects = [];
     this.listeners = [];
   }
   addProject(title: string, description: string, people: number) {
-    const newProject = {
-      id: Math.random().toString(),
+    const newProject = new Project(
+      Math.random().toString(),
       title,
       description,
       people,
-    };
+      ProjectStatus.Active
+    );
     console.log(newProject.id);
     this.projects.push(newProject);
     console.log("after push", this.projects);
+    console.log("listeners", this.listeners);
+
     for (const fn of this.listeners) {
       fn([...this.projects]);
     }
   }
 
-  addListeners(listenerFn: Function) {
+  addListeners(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
 
