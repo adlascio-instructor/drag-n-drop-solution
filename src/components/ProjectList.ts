@@ -1,3 +1,4 @@
+import { Project } from "../models/project.js";
 import { projectState } from "./ProjectState.js";
 
 type ProjectListType = "active" | "finished";
@@ -6,7 +7,7 @@ export class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  private assignedProjects: any[] = [];
+  private assignedProjects: Project[] = [];
   //   private type: ProjectListType;
   constructor(private type: ProjectListType) {
     this.type = type;
@@ -24,7 +25,7 @@ export class ProjectList {
     // Add a new id to the form
     this.element.id = `${this.type}-projects`;
     this.renderContent();
-    projectState.addListeners((projects: any[]) => {
+    projectState.addListeners((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects();
     });
