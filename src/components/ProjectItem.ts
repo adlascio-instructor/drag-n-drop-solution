@@ -1,13 +1,25 @@
 import { Project } from "../models/project.js";
 import { Component } from "./base-component.js";
+import { Draggable } from "../helpers/drag-drop.js";
 
-export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+export class ProjectItem
+  extends Component<HTMLUListElement, HTMLLIElement>
+  implements Draggable
+{
   project: Project;
   constructor(hostId: string, project: Project) {
     super("single-project", hostId, project.id);
     this.project = project;
+    this.configure();
     this.renderContent();
   }
+  dragStartHandler(_: DragEvent): void {
+    console.log("drag start");
+  }
+  dragEndHandler(_: DragEvent): void {
+    console.log("drag end");
+  }
+
   get members(): string {
     let result = "";
     // if (this.project.people === 1) {
@@ -25,7 +37,13 @@ export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     }
     return result;
   }
-  configure(): void {}
+  configure(): void {
+    this.element.addEventListener(
+      "dragstart",
+      this.dragStartHandler.bind(this)
+    );
+    this.element.addEventListener("dragend", this.dragEndHandler.bind(this));
+  }
   renderContent(): void {
     this.element.querySelector("h2")!.textContent = this.project.title;
     this.element.querySelector("h3")!.textContent = this.members;

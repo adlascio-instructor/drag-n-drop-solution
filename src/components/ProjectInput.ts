@@ -64,12 +64,12 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   private submitHandler(e: Event) {
     e.preventDefault();
     const userInput = this.gatherUserInput();
-    console.log("input data", userInput);
+    // console.log("input data", userInput);
     if (userInput) {
       const [title, desc, people] = userInput;
-      console.log("title", title);
-      console.log("description", desc);
-      console.log("people", people);
+      // console.log("title", title);
+      // console.log("description", desc);
+      // console.log("people", people);
       projectState.addProject(title, desc, people);
     }
     this.clearInputs();
