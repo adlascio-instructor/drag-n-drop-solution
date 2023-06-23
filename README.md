@@ -313,6 +313,9 @@ export interface DragTarget {
 - Use the `autobind` decorator for both methods.
 - If you try to test it in the browser, nothing will happen. That's because we need to set the `draggable` attribute to `true` in the `li` element in the HTML file.
 - Add logs to console to see when the events are triggered.
+
+> Make sure you are calling the `configure` method in the `constructor` to add the event listeners to the `li` element.
+
 - Test it in the browser.
 - Commit your changes and push your code to GitHub.
 - Create a pull request to merge your `step12` branch into the `master` branch.

@@ -18,10 +18,10 @@ class ProjectState {
       people,
       ProjectStatus.Active
     );
-    console.log(newProject.id);
+    // console.log(newProject.id);
     this.projects.push(newProject);
-    console.log("after push", this.projects);
-    console.log("listeners", this.listeners);
+    // console.log("after push", this.projects);
+    // console.log("listeners", this.listeners);
 
     for (const fn of this.listeners) {
       fn([...this.projects]);
