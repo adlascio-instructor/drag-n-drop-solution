@@ -1,4 +1,5 @@
 import { Project, ProjectStatus } from "../models/project.js";
+import { ProjectItem } from "./ProjectItem.js";
 import { projectState } from "./ProjectState.js";
 import { Component } from "./base-component.js";
 
@@ -18,9 +19,10 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     const ul = document.getElementById(`${this.type}-projects-list`)!;
     ul.innerHTML = "";
     this.assignedProjects.forEach((project) => {
-      const li = document.createElement("li");
-      li.textContent = project.title;
-      ul.append(li);
+      //   const li = document.createElement("li");
+      //   li.textContent = project.title;
+      //   ul.append(li);
+      new ProjectItem(`${this.type}-projects-list`, project);
     });
   }
   configure() {
