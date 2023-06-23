@@ -30,12 +30,16 @@ export class ProjectList
     });
   }
   dragOverHandler(e: DragEvent): void {
-    // console.log(e.target, "drag over");
+    // console.log(e.dataTransfer, "drag over");
+
+    if (e.dataTransfer && e.dataTransfer.types[0] === "text/plain") {
+      e.preventDefault();
+    }
     const ul = document.getElementById(`${this.type}-projects-list`)!;
     ul.classList.add("droppable");
   }
-  dropHandler(_: DragEvent): void {
-    console.log("drop");
+  dropHandler(event: DragEvent): void {
+    console.log("drop", event.dataTransfer!.getData("text/plain"));
   }
   dragLeaveHandler(_: DragEvent): void {
     // console.log("drag leave");

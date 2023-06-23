@@ -13,8 +13,10 @@ export class ProjectItem
     this.configure();
     this.renderContent();
   }
-  dragStartHandler(_: DragEvent): void {
+  dragStartHandler(event: DragEvent): void {
     console.log("drag start");
+    event.dataTransfer!.setData("text/plain", this.project.id);
+    event.dataTransfer!.effectAllowed = "move";
   }
   dragEndHandler(_: DragEvent): void {
     console.log("drag end");
