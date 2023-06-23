@@ -30,7 +30,7 @@ export class ProjectList
     });
   }
   dragOverHandler(e: DragEvent): void {
-    // console.log(e.target, "drag over");
+    // console.dir(e.target, "drag over");
     const ul = document.getElementById(`${this.type}-projects-list`)!;
     ul.classList.add("droppable");
   }
