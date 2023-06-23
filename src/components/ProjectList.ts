@@ -40,6 +40,10 @@ export class ProjectList
   }
   dropHandler(event: DragEvent): void {
     console.log("drop", event.dataTransfer!.getData("text/plain"));
+    const id = event.dataTransfer!.getData("text/plain");
+    const status =
+      this.type === "active" ? ProjectStatus.Active : ProjectStatus.Finished;
+    projectState.moveProject(id, status);
   }
   dragLeaveHandler(_: DragEvent): void {
     // console.log("drag leave");

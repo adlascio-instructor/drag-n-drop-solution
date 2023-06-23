@@ -22,7 +22,20 @@ class ProjectState {
     this.projects.push(newProject);
     // console.log("after push", this.projects);
     // console.log("listeners", this.listeners);
+    this.updateListeners();
+  }
 
+  moveProject(projectId: string, newStatus: ProjectStatus) {
+    const foundProject = this.projects.find(
+      (project) => projectId === project.id
+    );
+    if (foundProject && foundProject.status !== newStatus) {
+      foundProject.status = newStatus;
+    }
+    this.updateListeners();
+  }
+
+  updateListeners() {
     for (const fn of this.listeners) {
       fn([...this.projects]);
     }
