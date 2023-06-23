@@ -42,7 +42,7 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     const peopleValidatable: Validatable = {
       value: peopleValue,
       required: true,
-      min: 2,
+      min: 1,
     };
     if (
       !validate(titleValidatable) ||
