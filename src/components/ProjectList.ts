@@ -29,7 +29,7 @@ export class ProjectList
       new ProjectItem(`${this.type}-projects-list`, project);
     });
   }
-  dragOverHandler(e: DragEvent): void {
+  dragOverHandler(_: DragEvent): void {
     // console.dir(e.target, "drag over");
     const ul = document.getElementById(`${this.type}-projects-list`)!;
     ul.classList.add("droppable");
